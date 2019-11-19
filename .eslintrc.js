@@ -31,6 +31,7 @@ module.exports = {
             "VariableDeclarator": 3,
             "SwitchCase": 1
         }
-      ]
+      ],
+      "@typescript-eslint/no-angle-bracket-type-assertion": "off"
   },
 };

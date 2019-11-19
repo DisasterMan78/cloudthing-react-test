@@ -31,7 +31,7 @@ describe('Song list component', () => {
   });
 
   it('should render a wrapper element', () => {
-    expect(wrapper.find('span[className="input-wrapper"]').length)
+    expect(wrapper.find('div[className*="input-wrapper"]').length)
       .to.equal(1);
   });
 
