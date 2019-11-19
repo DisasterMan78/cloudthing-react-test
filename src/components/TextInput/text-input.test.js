@@ -15,9 +15,11 @@ chai.use(chaiEnzyme());
 chai.use(sinonChai);
 
 const name = 'input-name',
+      label = 'Input Label',
       Component = () => (
         <TextInput
           name={name}
+          label={label}
         />
       ),
       wrapper = mount(<Component />);
@@ -35,5 +37,15 @@ describe('Song list component', () => {
   it('should render a input element with id attribute', () => {
     expect(wrapper.find(`input[id="${name}"]`).length)
       .to.equal(1);
+  });
+
+  it('should render a label element with for attribute and label text', () => {
+    const labelElement = wrapper.find(`label[htmlFor="${name}"]`);
+
+    expect(labelElement.length)
+      .to.equal(1);
+
+    expect(labelElement.text())
+      .to.equal(label);
   });
 });
