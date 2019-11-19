@@ -6,6 +6,7 @@ body {
   margin: 0;
   background-color: #389a88;
   background-image: linear-gradient(#389a88, #64e6ac);
+  background-attachment: fixed;
 }
 
 body * {

@@ -27,19 +27,22 @@ type ErrorMessagesType = {
 const TextInput = ({ name, label, tabIndex, error, register, validation, type } : TextInputProps) => {
 
   const errorColour = '#e74843',
-        Wrapper = styled.div`
-          margin: 3rem 2rem 0;
+        Wrapper = styled.div(`
+          margin: 2rem 2rem 0;
           text-align: left;
-        `,
-        Label = styled.label`
+          &:first-of-type{
+            margin-top:3rem;
+          }
+        `),
+        Label = styled.label(`
           display: block;
           color: #fff;
           font-size: 0.8rem;
           font-weight: 600;
           text-transform: uppercase;
           margin-bottom: 0.5rem;
-        `,
-        Input = styled.input`
+        `),
+        Input = styled.input(`
           width: 100%;
           height: 4rem;
           padding-left: 1rem;
@@ -66,10 +69,15 @@ const TextInput = ({ name, label, tabIndex, error, register, validation, type } 
               line-height: 1.25rem;
             }
           }
-        `,
-        Error = styled.div`
+        `),
+        Error = styled.div(`
           position: relative;
-        `,
+          height: 12px;
+          padding-top: 0.5rem;
+          color:#fff;
+          font-size: 0.7rem;
+          letter-spacing: 0.034rem;
+        `),
         errorMessages: ErrorMessagesType = language.errors,
         renderError = (error: FieldError) => {
           let key: string = error.type;
@@ -81,9 +89,7 @@ const TextInput = ({ name, label, tabIndex, error, register, validation, type } 
           const message: string = errorMessages[key];
 
           if (error) {
-            return (
-              <Error className="input-error">{[message]}</Error>
-            )
+            return message;
           }
         }
 
@@ -99,7 +105,7 @@ const TextInput = ({ name, label, tabIndex, error, register, validation, type } 
               className={ (error) ? 'input-invalid' : '' }
               ref={register(validation)}
             />
-            { renderError(error) }
+            <Error className="input-error">{ renderError(error) }</Error>
           </Wrapper>
         );
       };
