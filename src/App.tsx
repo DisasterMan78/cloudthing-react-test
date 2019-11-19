@@ -30,6 +30,13 @@ const AppS = styled.div(`
                   message: 'validEmail',
                 },
               },
+              passwordValidation = {
+                required: true,
+                minLength: {
+                  value: 8,
+                  message: 'minLength8',
+                },
+              },
               onSubmit = (data: any, event: any) => {
                 if (Object.keys(errors).length) {
                   event.preventDefault();
@@ -48,6 +55,14 @@ const AppS = styled.div(`
                 label="Email"
                 validation={emailValidation}
                 error={errors.email}
+                register={register}
+              />
+              <TextInput
+                name="password"
+                label="Password"
+                type="password"
+                validation={passwordValidation}
+                error={errors.password}
                 register={register}
               />
               <button

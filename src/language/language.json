@@ -1,0 +1,7 @@
+{
+  "errors": {
+    "required": "This field is required",
+    "validEmail": "Please enter a valid email",
+    "minLength8": "Minimum length 8 characters"
+  }
+}
