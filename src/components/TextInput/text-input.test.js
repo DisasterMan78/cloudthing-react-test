@@ -29,6 +29,7 @@ const name = 'input-name',
       },
       error = {
         type: 'required',
+        message: '',
       },
       patternError = {
         type: 'pattern',
@@ -58,6 +59,30 @@ describe('TextInput component', () => {
       .to.equal(1);
 
     expect(wrapper.find(`input[name="${name}"]`).length)
+      .to.equal(1);
+  });
+
+  it('should render a text input element by default', () => {
+    expect(wrapper.find('input[type="text"]').length)
+      .to.equal(1);
+  });
+
+  it('should render a different input type element by request', () => {
+    const type = 'password',
+          TypeComponent = () => (
+          // eslint-disable-next-line react/jsx-indent
+            <TextInput
+              name={name}
+              label={label}
+              tabIndex={tabIndex}
+              register={register}
+              type={type}
+            />
+          ),
+          typeWrapper = mount(<TypeComponent />),
+          typeSelector = `input[type="${type}"]`;
+
+    expect(typeWrapper.find(typeSelector).length)
       .to.equal(1);
   });
 

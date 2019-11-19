@@ -17,6 +17,7 @@ type TextInputProps = {
   validation: ValidationType;
   tabIndex: number;
   register: any;
+  type: string;
 }
 
 type ErrorMessagesType = {
@@ -47,12 +48,12 @@ const Wrapper = styled.div(`
         letter-spacing: 0.05rem;
       `),
       errorMessages: ErrorMessagesType = language.errors,
-      TextInput = ({ name, label, tabIndex, error, register, validation }: TextInputProps) => {
+      TextInput = ({ name, label, tabIndex, error, register, validation, type }: TextInputProps) => {
 
         const renderError = (error: FieldError) => {
           let key: string = error.type;
 
-          if (error.type === 'pattern') {
+          if (error.message) {
             key = error.message as string;
           }
 
@@ -71,7 +72,7 @@ const Wrapper = styled.div(`
             <Input
               id={name}
               name={name}
-              type="text"
+              type={type}
               /* This is nor readable code. See explanation below */
               {...(tabIndex ? { tabIndex } : {})}
               ref={register(validation)}
@@ -95,6 +96,7 @@ It is functionally equivalent to
 TextInput.defaultProps = {
   tabIndex: false,
   error: false,
+  type: 'text',
 }
 
 export default TextInput;
