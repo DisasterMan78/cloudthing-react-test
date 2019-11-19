@@ -27,4 +27,9 @@ describe('Song list component', () => {
     expect(wrapper.find('input').length)
       .to.equal(1);
   });
+
+  it('should render a label element', () => {
+    expect(wrapper.find('label').length)
+      .to.equal(1);
+  });
 });
