@@ -22,4 +22,9 @@ describe('Song list component', () => {
   it('should render without crashing', () => {
     expect(wrapper.exists()).to.equal(true);
   });
+
+  it('should render an input element', () => {
+    expect(wrapper.find('input').length)
+      .to.equal(1);
+  });
 });
