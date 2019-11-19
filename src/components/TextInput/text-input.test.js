@@ -17,6 +17,7 @@ chai.use(sinonChai);
 const name = 'input-name',
       label = 'Input Label',
       tabIndex = '99',
+      error = 'Validation Error',
       Component = () => (
         <TextInput
           name={name}
@@ -49,12 +50,13 @@ describe('Song list component', () => {
               tabIndex={tabIndex}
             />
           ),
-          indexWrapper = mount(<IndexComponent />)
+          indexWrapper = mount(<IndexComponent />),
+          indexSelector = 'input[tabIndex="99"]';
 
-    expect(wrapper.find('input[tabIndex="99"]').length)
+    expect(wrapper.find(indexSelector).length)
       .to.equal(0);
 
-    expect(indexWrapper.find('input[tabIndex="99"]').length)
+    expect(indexWrapper.find(indexSelector).length)
       .to.equal(1);
   });
 
@@ -66,5 +68,27 @@ describe('Song list component', () => {
 
     expect(labelElement.text())
       .to.equal(label);
+  });
+
+  it('should conditionally render an error message', () => {
+    const ErrorComponent = () => (
+          // eslint-disable-next-line react/jsx-indent
+            <TextInput
+              name={name}
+              label={label}
+              error={error}
+            />
+          ),
+          errorWrapper = mount(<ErrorComponent />),
+          errorSelector = 'div[className*="input-error"]';
+
+    expect(wrapper.find(errorSelector).length)
+      .to.equal(0);
+
+    expect(errorWrapper.find(errorSelector).length)
+      .to.equal(1);
+
+    expect(errorWrapper.find(errorSelector).text())
+      .to.equal(error);
   });
 });

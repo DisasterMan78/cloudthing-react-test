@@ -2,9 +2,12 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 
+type ErrorType = string;
+
 type TextInputProps = {
   name: string;
   label: string;
+  error: ErrorType;
   tabIndex: number;
 }
 
@@ -31,7 +34,15 @@ const Wrapper = styled.div(`
         font-size: 1.1rem;
         letter-spacing: 0.05rem;
       `),
-      TextInput = ({ name, label, tabIndex }: TextInputProps) => {
+      TextInput = ({ name, label, tabIndex, error }: TextInputProps) => {
+
+  const renderError = (error: ErrorType) => {
+    if (error) {
+      return (
+        <div className="input-error">{error}</div>
+      )
+    }
+  }
 
   return (
     <Wrapper className="input-wrapper">
@@ -42,6 +53,7 @@ const Wrapper = styled.div(`
         /* This is nor readable code. See explanation below */
         {...(tabIndex ? { tabIndex } : {})}
       />
+      { renderError(error) }
     </Wrapper>
   );
 };
@@ -59,6 +71,7 @@ It is functionally equivalent to
 
 TextInput.defaultProps = {
   tabIndex: false,
+  error: false,
 }
 
 export default TextInput;
