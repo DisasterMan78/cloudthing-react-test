@@ -10,10 +10,12 @@
     "emotion": "10.0.23",
     "react": "16.8.6",
     "react-dom": "16.8.6",
+    "react-hook-form": "^3.28.1",
     "react-scripts": "3.0.1",
     "svg-react-loader": "0.4.6"
   },
   "devDependencies": {
+    "@rescripts/rescript-env": "^0.0.11",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.9",
     "@types/react": "^16.9.11",
@@ -29,6 +31,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "mutationobserver-shim": "^0.3.3",
     "prop-types": "^15.7.2",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.3.0",
