@@ -5,7 +5,8 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
-    "@emotion/styled": "10.0.23",
+    "@emotion/core": "^10.0.22",
+    "@emotion/styled": "^10.0.23",
     "emotion": "10.0.23",
     "react": "16.8.6",
     "react-dom": "16.8.6",
