@@ -14,7 +14,11 @@ configure({ adapter: new Adapter() }); // configures Enzyme adapter
 chai.use(chaiEnzyme());
 chai.use(sinonChai);
 
-const Component = () => (<TextInput />
+const name = 'input-name',
+      Component = () => (
+        <TextInput
+          name={name}
+        />
       ),
       wrapper = mount(<Component />);
 
@@ -23,13 +27,13 @@ describe('Song list component', () => {
     expect(wrapper.exists()).to.equal(true);
   });
 
-  it('should render an input element', () => {
-    expect(wrapper.find('input').length)
+  it('should render a wrapper element', () => {
+    expect(wrapper.find('span[className="input-wrapper"]').length)
       .to.equal(1);
   });
 
-  it('should render a label element', () => {
-    expect(wrapper.find('label').length)
+  it('should render a input element with id attribute', () => {
+    expect(wrapper.find(`input[id="${name}"]`).length)
       .to.equal(1);
   });
 });

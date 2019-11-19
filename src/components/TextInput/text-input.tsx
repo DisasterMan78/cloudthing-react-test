@@ -1,9 +1,15 @@
 import React from 'react';
 
-const TextInput = () => {
+type TextInputProps = {
+  name: string;
+}
+
+const TextInput = ({ name }: TextInputProps) => {
 
   return (
-    <input type="text" />
+    <span className="input-wrapper">
+      <input id={name} type="text" />
+    </span>
   );
 };
 
