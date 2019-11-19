@@ -7,7 +7,7 @@ import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import sinonChai from 'sinon-chai';
 
-import TextInput from './text-input';
+import TextInput from './text-input.tsx';
 
 configure({ adapter: new Adapter() }); // configures Enzyme adapter
 
