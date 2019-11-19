@@ -5,9 +5,11 @@ import chai, { expect } from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { stub } from 'sinon';
 import sinonChai from 'sinon-chai';
 
 import TextInput from './text-input.tsx';
+import language from '../../language/language.json';
 
 configure({ adapter: new Adapter() }); // configures Enzyme adapter
 
@@ -17,16 +19,31 @@ chai.use(sinonChai);
 const name = 'input-name',
       label = 'Input Label',
       tabIndex = '99',
-      error = 'Validation Error',
+      register = stub(),
+      validation = {
+        required: true,
+        pattern: {
+          value: /nonexistantregex/,
+          message: 'validEmail',
+        },
+      },
+      error = {
+        type: 'required',
+      },
+      patternError = {
+        type: 'pattern',
+        message: 'validEmail',
+      },
       Component = () => (
         <TextInput
           name={name}
           label={label}
+          register={register}
         />
       ),
       wrapper = mount(<Component />);
 
-describe('Song list component', () => {
+describe('TextInput component', () => {
   it('should render without crashing', () => {
     expect(wrapper.exists()).to.equal(true);
   });
@@ -36,8 +53,11 @@ describe('Song list component', () => {
       .to.equal(1);
   });
 
-  it('should render a input element with id attribute', () => {
+  it('should render a input element with matching id and name attributes', () => {
     expect(wrapper.find(`input[id="${name}"]`).length)
+      .to.equal(1);
+
+    expect(wrapper.find(`input[name="${name}"]`).length)
       .to.equal(1);
   });
 
@@ -48,6 +68,7 @@ describe('Song list component', () => {
               name={name}
               label={label}
               tabIndex={tabIndex}
+              register={register}
             />
           ),
           indexWrapper = mount(<IndexComponent />),
@@ -70,25 +91,47 @@ describe('Song list component', () => {
       .to.equal(label);
   });
 
-  it('should conditionally render an error message', () => {
+  it('should conditionally render an error message from the language file', () => {
     const ErrorComponent = () => (
           // eslint-disable-next-line react/jsx-indent
             <TextInput
               name={name}
               label={label}
               error={error}
+              register={register}
+              validation={validation}
             />
           ),
           errorWrapper = mount(<ErrorComponent />),
-          errorSelector = 'div[className*="input-error"]';
+          errorSelector = 'div[className*="input-error"]',
+          errorElement = errorWrapper.find(errorSelector);
 
     expect(wrapper.find(errorSelector).length)
       .to.equal(0);
 
-    expect(errorWrapper.find(errorSelector).length)
+    expect(errorElement.length)
       .to.equal(1);
 
-    expect(errorWrapper.find(errorSelector).text())
-      .to.equal(error);
+    expect(errorElement.text())
+      .to.equal(language.errors[error.type]);
+  });
+
+  it('should conditionally render an specific "pattern" error message from the language file', () => {
+    const ErrorComponent = () => (
+          // eslint-disable-next-line react/jsx-indent
+            <TextInput
+              name={name}
+              label={label}
+              error={patternError}
+              register={register}
+              validation={validation}
+            />
+          ),
+          errorWrapper = mount(<ErrorComponent />),
+          errorSelector = 'div[className*="input-error"]',
+          errorElement = errorWrapper.find(errorSelector);
+
+    expect(errorElement.text())
+      .to.equal(language.errors[patternError.message]);
   });
 });

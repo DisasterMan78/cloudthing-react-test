@@ -1,14 +1,26 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
+import { FieldError } from 'react-hook-form/dist/types';
 
-type ErrorType = string;
+import language from '../../language/language.json';
+
+type ValidationType = {
+  pattern?: any;
+  required?: boolean;
+}
 
 type TextInputProps = {
   name: string;
   label: string;
-  error: ErrorType;
+  error: FieldError;
+  validation: ValidationType;
   tabIndex: number;
+  register: any;
+}
+
+type ErrorMessagesType = {
+  [key: string]: string;
 }
 
 const Wrapper = styled.div(`
@@ -34,29 +46,40 @@ const Wrapper = styled.div(`
         font-size: 1.1rem;
         letter-spacing: 0.05rem;
       `),
-      TextInput = ({ name, label, tabIndex, error }: TextInputProps) => {
+      errorMessages: ErrorMessagesType = language.errors,
+      TextInput = ({ name, label, tabIndex, error, register, validation }: TextInputProps) => {
 
-  const renderError = (error: ErrorType) => {
-    if (error) {
-      return (
-        <div className="input-error">{error}</div>
-      )
-    }
-  }
+        const renderError = (error: FieldError) => {
+          let key: string = error.type;
 
-  return (
-    <Wrapper className="input-wrapper">
-      <Label htmlFor={name}>{label}</Label>
-      <Input
-        id={name}
-        type="text"
-        /* This is nor readable code. See explanation below */
-        {...(tabIndex ? { tabIndex } : {})}
-      />
-      { renderError(error) }
-    </Wrapper>
-  );
-};
+          if (error.type === 'pattern') {
+            key = error.message as string;
+          }
+
+          const message: string = errorMessages[key];
+
+          if (error) {
+            return (
+              <div className="input-error">{[message]}</div>
+            )
+          }
+        }
+
+        return (
+          <Wrapper className="input-wrapper">
+            <Label htmlFor={name}>{label}</Label>
+            <Input
+              id={name}
+              name={name}
+              type="text"
+              /* This is nor readable code. See explanation below */
+              {...(tabIndex ? { tabIndex } : {})}
+              ref={register(validation)}
+            />
+            { renderError(error) }
+          </Wrapper>
+        );
+      };
 
 /*
 Re: tabIndex prop

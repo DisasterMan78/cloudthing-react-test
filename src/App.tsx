@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react';
+import useForm from 'react-hook-form'
 
 import styled from '@emotion/styled';
 
@@ -7,7 +7,11 @@ import './styles.css';
 import { ReactComponent as Logo } from './assets/svg/logo.svg';
 
 import TextInput from './components/TextInput/text-input';
-import Submit from './components/Submit/submit';
+
+
+type FormDataTypes = {
+  email?: string;
+}
 
 const AppS = styled.div(`
         margin-top: 30px;
@@ -15,24 +19,46 @@ const AppS = styled.div(`
       LogoS = styled.span(`
         margin-left: 2.5rem;
       `),
-      validateFields = (event: React.MouseEvent) => {
+      // Per https://emailregex.com/
+      emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      App = () => {
+        const { register, handleSubmit, watch, errors } = useForm(),
+              emailValidation = {
+                required: true,
+                pattern: {
+                  value: emailRegex,
+                  message: 'validEmail',
+                },
+              },
+              onSubmit = (data: any, event: any) => {
+                if (Object.keys(errors).length) {
+                  event.preventDefault();
+                }
+                console.log('Submit form...')
+              };
 
-      },
-      App = () => (
-        <AppS className="App">
-          <LogoS>
-            <Logo className="logo"/>
-          </LogoS>
-          <TextInput
-            name="email"
-            label="Email"
-          />
-          <Submit
-            id="submit-button"
-            label="Log In"
-            onClick={validateFields}
-          />
-        </AppS>
-      );
+        return (
+          <AppS className="App">
+            <LogoS>
+              <Logo className="logo"/>
+            </LogoS>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <TextInput
+                name="email"
+                label="Email"
+                validation={emailValidation}
+                error={errors.email}
+                register={register}
+              />
+              <button
+                id="submit-button"
+                type="submit"
+              >
+                Log In
+              </button>
+            </form>
+          </AppS>
+        )
+      };
 
 export default App;
