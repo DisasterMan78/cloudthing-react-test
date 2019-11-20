@@ -21,7 +21,14 @@ type TextInputProps = {
 
 const errorColour = '#e74843',
       Wrapper = styled.div(`
-        margin: 2rem 2rem 0;
+        width: 90%;
+        margin-top: 2rem;
+        margin-left: 5%;
+        @media (min-width: 360px) {
+          width: auto;
+          margin-top: 2rem;
+          margin-left: 0;
+        }
         text-align: left;
         &:first-of-type{
           margin-top:3rem;
@@ -67,7 +74,7 @@ const errorColour = '#e74843',
       `),
       Error = styled.div(`
         position: relative;
-        height: 12px;
+        height: 0.75rem;
         padding-top: 0.5rem;
         color:#fff;
         font-size: 0.7rem;

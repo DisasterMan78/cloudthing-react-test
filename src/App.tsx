@@ -23,16 +23,28 @@ type stateObjectType = {
   password: stateValueType;
 }
 
-const AppS = styled.div(`
-        margin-top: 30px;
+const LoginWrapper = styled.div(`
+        margin: 0 auto 0;
+        max-width: 480px;
+        padding: 2rem 2rem 0;
+
+        @media (min-width: 960px) {
+          margin-top: 12rem;
+          background: rgba(255, 255, 255, 0.25);
+          border-radius: 0.375rem;
+        }
       `),
       LogoS = styled.span(`
         margin-left: 2.5rem;
       `),
       Button = styled.button(`
-        margin: 3.2rem 2rem;
-        width: calc(100% - 4rem);
-        height: 4rem;
+        width: 90%;
+        height: 3rem;
+        @media (min-width: 360px) {
+          height: 4rem;
+          width: 100%;
+          margin-top: 3.2rem;
+        }
         border: none;
         color: #fff;
         background-color: #2d9482;
@@ -77,35 +89,37 @@ const AppS = styled.div(`
         { email, password } = values;
 
   return (
-    <AppS className="App">
-      <LogoS>
-        <Logo className="logo"/>
-      </LogoS>
-      <form onSubmit={handleOnSubmit}>
-        <TextInput
-          name="email"
-          label="Email"
-          errors={errors}
-          handleOnChange={handleOnChange}
-          value={email}
-        />
-        <TextInput
-          name="password"
-          label="Password"
-          type="password"
-          errors={errors}
-          handleOnChange={handleOnChange}
-          value={password}
-        />
-        <Button
-          id="submit-button"
-          type="submit"
-          disabled={disable}
-        >
-          Log In
-        </Button>
-      </form>
-    </AppS>
+    <div className="App">
+      <LoginWrapper className="loginWrapper">
+        <LogoS>
+          <Logo className="logo"/>
+        </LogoS>
+        <form onSubmit={handleOnSubmit}>
+          <TextInput
+            name="email"
+            label="Email"
+            errors={errors}
+            handleOnChange={handleOnChange}
+            value={email}
+          />
+          <TextInput
+            name="password"
+            label="Password"
+            type="password"
+            errors={errors}
+            handleOnChange={handleOnChange}
+            value={password}
+          />
+          <Button
+            id="submit-button"
+            type="submit"
+            disabled={disable}
+          >
+            Log In
+          </Button>
+        </form>
+      </LoginWrapper>
+    </div>
   );
 };
 
