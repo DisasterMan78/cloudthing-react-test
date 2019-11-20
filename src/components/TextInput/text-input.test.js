@@ -5,7 +5,6 @@ import chai, { expect } from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { stub } from 'sinon';
 import sinonChai from 'sinon-chai';
 
 import TextInput from './text-input.tsx';
