@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 const VALUE = 'value';
 const ERROR = 'error';
 
-const REQUIRED_FIELD_ERROR = 'This is required field';
+const REQUIRED_FIELD_ERROR = 'required';
 
 /**
  * Determines a value if it's an object
