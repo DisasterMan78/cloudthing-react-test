@@ -72,7 +72,7 @@ const LoginWrapper = styled.div(`
           margin-top: 3.2rem;
         }
       `),
-      Hidden = styled.p(`
+      Hidden = styled.div(`
         clip-path: inset(100%);
         clip: rect(1px 1px 1px 1px); /* IE 6/7 */
         clip: rect(1px, 1px, 1px, 1px);
