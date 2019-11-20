@@ -54,6 +54,17 @@ const LoginWrapper = styled.div(`
         text-transform: uppercase;
         letter-spacing: 0.04rem;
         box-shadow: 0px 0.25rem 0.5rem 0 rgba(0,0,0,0.5);
+        &:hover {
+          background-color: #1d6156;
+        }
+        &:active {
+          background-color: #34ad99;
+        }
+
+        &:disabled {
+          background-color: #71948e;
+          cursor: not-allowed;
+        }
 
         @media (min-width: 360px) {
           height: 4rem;
