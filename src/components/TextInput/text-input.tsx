@@ -79,6 +79,15 @@ const errorColour = '#e74843',
         border-radius: 4px;
         font-size: 1.1rem;
         letter-spacing: 0.05rem;
+
+        @media (min-width: 960px) {
+          letter-spacing: 0.025rem;
+
+          &[type="password"] {
+            font-size: 1.5rem;
+            letter-spacing: -0.025rem;
+          }
+        }
       `),
       Error = styled.div(`
         position: relative;
