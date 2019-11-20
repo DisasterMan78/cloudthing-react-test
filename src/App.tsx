@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useForm from 'react-hook-form'
+import useForm from './hooks/useForm';
 
 import styled from '@emotion/styled';
 
@@ -9,8 +9,18 @@ import { ReactComponent as Logo } from './assets/svg/logo.svg';
 import TextInput from './components/TextInput/text-input';
 
 
-type FormDataTypes = {
-  email?: string;
+type ValueTypes = {
+  [key: string]: string;
+}
+
+type stateValueType = {
+  value: string;
+  error: string;
+}
+
+type stateObjectType = {
+  email : stateValueType;
+  password: stateValueType;
 }
 
 const AppS = styled.div(`
@@ -19,61 +29,84 @@ const AppS = styled.div(`
       LogoS = styled.span(`
         margin-left: 2.5rem;
       `),
-      // Per https://emailregex.com/
-      emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      Button = styled.button(`
+        margin: 3.2rem 2rem;
+        width: calc(100% - 4rem);
+        height: 4rem;
+        border: none;
+        color: #fff;
+        background-color: #2d9482;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04rem;
+        box-shadow: 0px 0.25rem 0.5rem 0 rgba(0,0,0,0.5);
+      `),
       App = () => {
-        const { register, handleSubmit, watch, errors } = useForm(),
-              emailValidation = {
-                required: true,
-                pattern: {
-                  value: emailRegex,
-                  message: 'validEmail',
-                },
-              },
-              passwordValidation = {
-                required: true,
-                minLength: {
-                  value: 8,
-                  message: 'minLength8',
-                },
-              },
-              onSubmit = (data: any, event: any) => {
-                if (Object.keys(errors).length) {
-                  event.preventDefault();
-                }
-                console.log('Submit form...')
-              };
+        const stateSchema = {
+          email: { value: "", error: "" },
+          password: { value: "", error: "" },
+        },
+        // Per https://emailregex.com/
+        emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        minLengthRegex = /.{8,}/,
+        validationSchema = {
+          email: {
+            required: true,
+            validator: {
+              func: (value: string) => emailRegex.test(value),
+              error: 'validEmail',
+            },
+          },
+          password: {
+            required: true,
+            validator: {
+              func: (value: string) => minLengthRegex.test(value),
+              error: 'minLength8',
+            },
+          },
+        },
+        onSubmitForm = (state: stateObjectType) => {
+          console.log(JSON.stringify(state, null, 2));
+        },
+        { values, errors, handleOnChange, handleOnSubmit, disable } = useForm(
+          stateSchema,
+          validationSchema,
+          onSubmitForm
+        ),
+        //@ts-ignore
+        { email, password } = values;
 
-        return (
-          <AppS className="App">
-            <LogoS>
-              <Logo className="logo"/>
-            </LogoS>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <TextInput
-                name="email"
-                label="Email"
-                validation={emailValidation}
-                error={errors.email}
-                register={register}
-              />
-              <TextInput
-                name="password"
-                label="Password"
-                type="password"
-                validation={passwordValidation}
-                error={errors.password}
-                register={register}
-              />
-              <button
-                id="submit-button"
-                type="submit"
-              >
-                Log In
-              </button>
-            </form>
-          </AppS>
-        )
-      };
+  return (
+    <AppS className="App">
+      <LogoS>
+        <Logo className="logo"/>
+      </LogoS>
+      <form onSubmit={handleOnSubmit}>
+        <TextInput
+          name="email"
+          label="Email"
+          errors={errors}
+          handleOnChange={handleOnChange}
+          value={email}
+        />
+        <TextInput
+          name="password"
+          label="Password"
+          type="password"
+          errors={errors}
+          handleOnChange={handleOnChange}
+          value={password}
+        />
+        <Button
+          id="submit-button"
+          type="submit"
+          disabled={disable}
+        >
+          Log In
+        </Button>
+      </form>
+    </AppS>
+  );
+};
 
 export default App;

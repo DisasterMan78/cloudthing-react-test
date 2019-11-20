@@ -1,111 +1,102 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { FieldError } from 'react-hook-form/dist/types';
 
 import language from '../../language/language.json';
 
-type ValidationType = {
-  pattern?: any;
-  required?: boolean;
-}
-
-type TextInputProps = {
-  name: string;
-  label: string;
-  error: FieldError;
-  validation: ValidationType;
-  tabIndex: number;
-  register: any;
-  type: string;
-}
 
 type ErrorMessagesType = {
   [key: string]: string;
 }
 
-const TextInput = ({ name, label, tabIndex, error, register, validation, type } : TextInputProps) => {
+type TextInputProps = {
+  name: string;
+  label: string;
+  errors: ErrorMessagesType;
+  tabIndex: number;
+  value: string;
+  type: string;
+  handleOnChange: any;
+}
 
-  const errorColour = '#e74843',
-        Wrapper = styled.div(`
-          margin: 2rem 2rem 0;
-          text-align: left;
-          &:first-of-type{
-            margin-top:3rem;
-          }
-        `),
-        Label = styled.label(`
-          display: block;
-          color: #fff;
-          font-size: 0.8rem;
-          font-weight: 600;
-          text-transform: uppercase;
-          margin-bottom: 0.5rem;
-        `),
-        Input = styled.input(`
-          width: 100%;
-          height: 4rem;
-          padding-left: 1rem;
-          padding-right: 1rem;
-          color: #000;
-          border: 1px solid #fff;
-          border-radius: 4px;
-          font-size: 1.1rem;
-          letter-spacing: 0.05rem;
-          &.input-invalid {
+const errorColour = '#e74843',
+      Wrapper = styled.div(`
+        margin: 2rem 2rem 0;
+        text-align: left;
+        &:first-of-type{
+          margin-top:3rem;
+        }
+        &.input-invalid {
+          & input {
             border-color: ${errorColour};
-            & + .input-error: after {
-              position: absolute;
-              content: "!";
-              right: 1rem;
-              top: -2.5rem;
-              width: 1rem;
-              height: 1rem;
-              color: #fff;
-              background-color: ${errorColour};
-              border-radius: 0.5rem;
-              text-align: center;
-              font-size: 0.7rem;
-              line-height: 1.25rem;
-            }
           }
-        `),
-        Error = styled.div(`
-          position: relative;
-          height: 12px;
-          padding-top: 0.5rem;
-          color:#fff;
-          font-size: 0.7rem;
-          letter-spacing: 0.034rem;
-        `),
-        errorMessages: ErrorMessagesType = language.errors,
-        renderError = (error: FieldError) => {
-          let key: string = error.type;
-
-          if (error.message) {
-            key = error.message as string;
-          }
-
-          const message: string = errorMessages[key];
-
-          if (error) {
-            return message;
+          & .input-error: after {
+            position: absolute;
+            content: "!";
+            right: 1rem;
+            top: -2.5rem;
+            width: 1rem;
+            height: 1rem;
+            color: #fff;
+            background-color: ${errorColour};
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 0.7rem;
+            line-height: 1.25rem;
           }
         }
+      `),
+      Label = styled.label(`
+        display: block;
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      `),
+      Input = styled.input(`
+        width: 100%;
+        height: 4rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        color: #000;
+        border: 1px solid #fff;
+        border-radius: 4px;
+        font-size: 1.1rem;
+        letter-spacing: 0.05rem;
+      `),
+      Error = styled.div(`
+        position: relative;
+        height: 12px;
+        padding-top: 0.5rem;
+        color:#fff;
+        font-size: 0.7rem;
+        letter-spacing: 0.034rem;
+      `),
+      TextInput = ({ name, label, tabIndex, errors, value, type, handleOnChange } : TextInputProps) => {
+
+        const errorMessages: ErrorMessagesType = language.errors,
+              onChange = (event: React.FormEvent<HTMLInputElement>) => {
+                handleOnChange(event);
+              };
 
         return (
-          <Wrapper className="input-wrapper">
+          <Wrapper
+            className={ (errors && errors[name]) ? 'input-invalid input-wrapper' : 'input-wrapper' }
+            key={`${name}-wrapper`}
+          >
             <Label htmlFor={name}>{label}</Label>
             <Input
               id={name}
               name={name}
               type={type}
+              defaultValue={value}
+              key={`${name}-input`}
               /* This is nor readable code. See explanation below */
               {...(tabIndex ? { tabIndex } : {})}
-              className={ (error) ? 'input-invalid' : '' }
-              ref={register(validation)}
+              onChange={onChange}
             />
-            <Error className="input-error">{ renderError(error) }</Error>
+            <Error className="input-error">{ (errors) ? errorMessages[errors[name]] : '' }</Error>
           </Wrapper>
         );
       };
@@ -119,6 +110,7 @@ It is functionally equivalent to
   if (tabIndex) {
     {...tabIndex}
   }
+<Error /> component also uses ternary operator
 */
 
 TextInput.defaultProps = {

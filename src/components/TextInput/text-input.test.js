@@ -16,30 +16,19 @@ configure({ adapter: new Adapter() }); // configures Enzyme adapter
 chai.use(chaiEnzyme());
 chai.use(sinonChai);
 
-const name = 'input-name',
+const name = 'email',
       label = 'Input Label',
       tabIndex = '99',
-      register = stub(),
-      validation = {
-        required: true,
-        pattern: {
-          value: /nonexistantregex/,
-          message: 'validEmail',
-        },
+      errors = {
+        email: 'required',
       },
-      error = {
-        type: 'required',
-        message: '',
-      },
-      patternError = {
-        type: 'pattern',
-        message: 'validEmail',
+      patternErrors = {
+        email: 'validEmail',
       },
       Component = () => (
         <TextInput
           name={name}
           label={label}
-          register={register}
         />
       ),
       wrapper = mount(<Component />);
@@ -75,7 +64,6 @@ describe('TextInput component', () => {
               name={name}
               label={label}
               tabIndex={tabIndex}
-              register={register}
               type={type}
             />
           ),
@@ -93,7 +81,6 @@ describe('TextInput component', () => {
               name={name}
               label={label}
               tabIndex={tabIndex}
-              register={register}
             />
           ),
           indexWrapper = mount(<IndexComponent />),
@@ -122,23 +109,22 @@ describe('TextInput component', () => {
             <TextInput
               name={name}
               label={label}
-              error={error}
-              register={register}
-              validation={validation}
+              errors={errors}
             />
           ),
           errorWrapper = mount(<ErrorComponent />),
           errorSelector = 'div[className*="input-error"]',
+          noErrorElement = wrapper.find(errorSelector),
           errorElement = errorWrapper.find(errorSelector);
 
-    expect(wrapper.find(errorSelector).length)
-      .to.equal(0);
-
-    expect(errorElement.length)
+    expect(noErrorElement.length)
       .to.equal(1);
 
+    expect(noErrorElement.text())
+      .to.equal('');
+
     expect(errorElement.text())
-      .to.equal(language.errors[error.type]);
+      .to.equal(language.errors[errors[name]]);
   });
 
   it('should conditionally render an specific "pattern" error message from the language file', () => {
@@ -147,9 +133,7 @@ describe('TextInput component', () => {
             <TextInput
               name={name}
               label={label}
-              error={patternError}
-              register={register}
-              validation={validation}
+              errors={patternErrors}
             />
           ),
           errorWrapper = mount(<ErrorComponent />),
@@ -157,6 +141,6 @@ describe('TextInput component', () => {
           errorElement = errorWrapper.find(errorSelector);
 
     expect(errorElement.text())
-      .to.equal(language.errors[patternError.message]);
+      .to.equal(language.errors[patternErrors[name]]);
   });
 });
