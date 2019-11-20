@@ -61,6 +61,16 @@ const LoginWrapper = styled.div(`
           margin-top: 3.2rem;
         }
       `),
+      Hidden = styled.p(`
+        clip-path: inset(100%);
+        clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+        clip: rect(1px, 1px, 1px, 1px);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap; /* added line */
+        width: 1px;
+      `),
       App = () => {
         const stateSchema = {
           email: { value: "", error: "" },
@@ -103,6 +113,14 @@ const LoginWrapper = styled.div(`
           <Logo className="logo"/>
         </LogoS>
         <form onSubmit={handleOnSubmit}>
+          <Hidden>
+            Form requirements
+            <ul>
+              <li>Email and password are both required fields</li>
+              <li>Email must be a valid email format</li>
+              <li>Password must be at least 8 characters</li>
+            </ul>
+          </Hidden>
           <TextInput
             name="email"
             label="Email"
