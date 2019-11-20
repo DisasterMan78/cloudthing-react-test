@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useForm from './hooks/useForm';
 
 import styled from '@emotion/styled';
@@ -88,7 +88,7 @@ const LoginWrapper = styled.div(`
           password: { value: "", error: "" },
         },
         // Per https://emailregex.com/
-        emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         minLengthRegex = /.{8,}/,
         validationSchema = {
           email: {
