@@ -22,6 +22,8 @@ Using [this design](https://www.figma.com/file/L7u0enlOxKXZuYtDRGjnXI/React-Deve
 
 ### Notes
 
+* Utilises `useForm` hook based on https://codesandbox.io/s/o766kp4z05
+
 * Behaviour on very small (<360px) screens is odd in current Chrome (v78.0) - this appears to be a browser bug, but something of an edge case
 
 * Sizes are rationalised to whole multiples or sensible fractions of REM values. As a result, the layouts are not pixel perfect to the suplied flat artwork, but are better suited to use in a coherent design system. Refer to visual diffs below.
