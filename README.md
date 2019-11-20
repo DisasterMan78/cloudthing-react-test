@@ -29,3 +29,27 @@ Using [this design](https://www.figma.com/file/L7u0enlOxKXZuYtDRGjnXI/React-Deve
 https://github.com/DisasterMan78/cloudthing-react-test/blob/master/visual-diffs/diff-mobile.png
 
 https://github.com/DisasterMan78/cloudthing-react-test/blob/master/visual-diffs/diff-desktop.png
+
+### Accessibility
+
+Images:
+
+* SVG has accessible \<title> tag
+
+Forms:
+
+Key methods as per https://www.w3.org/WAI/tutorials/forms/
+
+* Labeling Controls: All inputs labelled
+
+* Grouping Controls: Not required for simple form
+
+* Form Instructions: Visually hidden but screen-readable input requirements provided
+
+* Validating Input: Inputes are validated
+
+* User Notifications: Submission functionality not added, notifications not required
+
+* Multi-Page Forms: Not required for simple form
+
+* Custom Controls: Not required for simple form
