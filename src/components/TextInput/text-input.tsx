@@ -24,19 +24,27 @@ const errorColour = '#e74843',
         width: 90%;
         margin-top: 2rem;
         margin-left: 5%;
+        text-align: left;
+
+        &:first-of-type{
+          margin-top:1.5rem;
+        }
+
         @media (min-width: 360px) {
           width: auto;
-          margin-top: 2rem;
           margin-left: 0;
+
+          &:first-of-type{
+            margin-top:2.75rem;
+          }
         }
-        text-align: left;
-        &:first-of-type{
-          margin-top:3rem;
-        }
+
         &.input-invalid {
+
           & input {
             border-color: ${errorColour};
           }
+
           & .input-error: after {
             position: absolute;
             content: "!";

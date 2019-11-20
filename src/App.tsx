@@ -24,9 +24,15 @@ type stateObjectType = {
 }
 
 const LoginWrapper = styled.div(`
-        margin: 0 auto 0;
-        max-width: 480px;
-        padding: 2rem 2rem 0;
+        width: 100%;
+        margin: 0 0.25rem 0;
+        padding: 1rem 0 1.5rem;
+
+        @media (min-width: 360px) {
+          max-width: 480px;
+          margin: 0 auto 0;
+          padding: 2rem 2rem 2.75rem;
+        }
 
         @media (min-width: 960px) {
           margin-top: 12rem;
@@ -40,11 +46,7 @@ const LoginWrapper = styled.div(`
       Button = styled.button(`
         width: 90%;
         height: 3rem;
-        @media (min-width: 360px) {
-          height: 4rem;
-          width: 100%;
-          margin-top: 3.2rem;
-        }
+        margin-top: 2rem;
         border: none;
         color: #fff;
         background-color: #2d9482;
@@ -52,6 +54,12 @@ const LoginWrapper = styled.div(`
         text-transform: uppercase;
         letter-spacing: 0.04rem;
         box-shadow: 0px 0.25rem 0.5rem 0 rgba(0,0,0,0.5);
+
+        @media (min-width: 360px) {
+          height: 4rem;
+          width: 100%;
+          margin-top: 3.2rem;
+        }
       `),
       App = () => {
         const stateSchema = {
