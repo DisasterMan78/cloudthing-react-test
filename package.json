@@ -5,17 +5,16 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@babel/plugin-syntax-flow": "^7.7.0",
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.23",
     "emotion": "10.0.23",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-hook-form": "^3.28.1",
     "react-scripts": "3.0.1",
     "svg-react-loader": "0.4.6"
   },
   "devDependencies": {
-    "@rescripts/rescript-env": "^0.0.11",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.9",
     "@types/react": "^16.9.11",
